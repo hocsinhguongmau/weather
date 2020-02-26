@@ -57,7 +57,7 @@ class App extends Component {
 			weather = (
 				<div>
 					<p>
-						{this.state.items.id} {this.state.items.name}
+						{this.state.items.name} {this.state.items.sys.country}
 					</p>
 					<p>{this.state.items.sys.id}</p>
 					<p>{this.state.items.weather[0].main}</p>

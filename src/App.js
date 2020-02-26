@@ -59,6 +59,7 @@ class App extends Component {
 					<p>
 						{this.state.items.id} {this.state.items.name}
 					</p>
+					<p>{this.state.items.sys.id}</p>
 					<p>{this.state.items.weather[0].main}</p>
 					<p>{this.state.items.weather[0].description}</p>
 					<p>

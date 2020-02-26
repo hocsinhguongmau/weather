@@ -3,7 +3,7 @@ import "./App.scss";
 
 const api = {
 	key: "e8ad1adef88349968665b0d70b156a49",
-	base: "http://api.openweathermap.org/data/2.5/"
+	base: "https://api.openweathermap.org/data/2.5/"
 };
 class App extends Component {
 	state = {

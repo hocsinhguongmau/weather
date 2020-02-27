@@ -14,10 +14,10 @@ body {
     min-height: 100vh;
     padding-top: 30px;
     &.day{
-        background-image: url("../images/day.jpg");
+        background-image: url("../images/bg/day.jpg");
     }
     &.night{
-        background-image: url("../images/night.jpg");
+        background-image: url("../images/bg/night.jpg");
     }
 }
 .weather{
@@ -40,10 +40,9 @@ body {
         text-transform: capitalize;
     }
     &-image{
-        line-height: 50px;
+        line-height: 64px;
         img{
             vertical-align: top;
-            margin-right: 5px;
         }
     }
     &-search{
@@ -56,6 +55,7 @@ body {
             height: 40px;
             line-height: 40px;
             outline: none;
+            width: 300px;
         }
         button[type="submit"]{
             height: 40px;

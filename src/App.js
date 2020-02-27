@@ -6,6 +6,7 @@ const api = {
 	base: "https://api.openweathermap.org/data/2.5/"
 };
 
+
 class App extends Component {
 	state = {
 		isLoaded: false,
@@ -99,16 +100,27 @@ class App extends Component {
 		this.setState({searchCity: e.target.value});
 	};
 
+	handleErrors = response => {
+		if (!response.ok) {
+			throw Error(response.statusText);
+		}
+		return response;
+	};
+
 	handleSearchSubmit = e => {
-		console.log("A name was submitted: " + this.state.searchCity);
 		const query = this.state.searchCity;
 		fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+			.then(this.handleErrors)
 			.then(res => res.json())
 			.then(result => {
 				this.setState({
 					items: result
 				});
+			})
+			.catch(error => {
+				alert("City not found!");
 			});
+
 		e.preventDefault();
 	};
 
@@ -148,7 +160,7 @@ class App extends Component {
 									</p>
 									<p className="weather-image">
 										<img
-											src={`http://openweathermap.org/img/wn/${this.state.items.weather[0].icon}.png`}
+											src={process.env.PUBLIC_URL+`/images/animated-icons/${this.state.items.weather[0].icon}.svg`}
 											alt={
 												this.state.items.weather[0]
 													.description
@@ -171,7 +183,6 @@ class App extends Component {
 		return (
 			<div>
 				{weather}
-				<div id="demo"></div>
 			</div>
 		);
 	}

@@ -43,10 +43,11 @@ body {
         line-height: 64px;
         img{
             vertical-align: top;
+            width: 64px;
         }
     }
     &-search{
-        input[type="text"]{
+        input{
             background: #fff;
             border: 1px solid #333;
             font-size: 14px;

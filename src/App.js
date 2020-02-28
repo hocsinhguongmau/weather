@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import Autocomplete from "react-google-autocomplete";
 import "./App.scss";
 
 const api = {
@@ -6,13 +7,12 @@ const api = {
 	base: "https://api.openweathermap.org/data/2.5/"
 };
 
-
 class App extends Component {
 	state = {
 		isLoaded: false,
 		currentLocation: {},
 		currentTime: null,
-		items: {},
+		currentWeather: {},
 		searchCity: ""
 	};
 
@@ -25,7 +25,7 @@ class App extends Component {
 				result => {
 					this.setState({
 						isLoaded: true,
-						items: result
+						currentWeather: result
 					});
 				},
 				error => {
@@ -97,7 +97,8 @@ class App extends Component {
 	};
 
 	handleSearchInput = e => {
-		this.setState({searchCity: e.target.value});
+		this.setState({searchCity: e});
+
 	};
 
 	handleErrors = response => {
@@ -114,7 +115,7 @@ class App extends Component {
 			.then(res => res.json())
 			.then(result => {
 				this.setState({
-					items: result
+					currentWeather: result
 				});
 			})
 			.catch(error => {
@@ -125,9 +126,11 @@ class App extends Component {
 	};
 
 	render() {
-		let weather = null;
+		let weatherValue = null;
+		let currentWeather = this.state.currentWeather;
+
 		if (this.state.isLoaded) {
-			weather = (
+			weatherValue = (
 				<div className="App">
 					<div className={`${this.getTime(new Date())} wrapper`}>
 						<div className="weather">
@@ -136,43 +139,47 @@ class App extends Component {
 									action=""
 									onSubmit={this.handleSearchSubmit}
 								>
-									<input
-										placeholder="Search by city"
-										type="text"
-										onChange={this.handleSearchInput}
-										value={this.state.searchCity}
+									<Autocomplete
+										placeholder="Search by city or postal code"
+										onPlaceSelected={place => {
+											this.handleSearchInput(
+												place.name === undefined ? place.formatted_address : place.name
+											);
+										}}
+										types={["(regions)"]}
 									/>
 									<button type="submit">Search</button>
 								</form>
 							</div>
 							<div className="weather-info">
 								<p className="weather-title">
-									{this.state.items.name}{" "}
-									{this.state.items.sys.country}
+									{currentWeather.name},&nbsp;
+									{currentWeather.sys.country}
 								</p>
 								<p>{this.getDate(new Date())}</p>
 								<div className="weather-info-left">
 									<p className="weather-description">
-										{
-											this.state.items.weather[0]
-												.description
-										}
+										{currentWeather.weather[0].description}
 									</p>
 									<p className="weather-image">
 										<img
-											src={process.env.PUBLIC_URL+`/images/animated-icons/${this.state.items.weather[0].icon}.svg`}
+											src={
+												process.env.PUBLIC_URL +
+												`/images/animated-icons/${currentWeather.weather[0].icon}.svg`
+											}
 											alt={
-												this.state.items.weather[0]
+												currentWeather.weather[0]
 													.description
 											}
 										/>
 										{Math.round(
-											this.state.items.main.temp,
+											currentWeather.main.temp,
 											0
 										)}{" "}
 										&deg;C
 									</p>
 								</div>
+
 								<div className="weather-info-right"></div>
 							</div>
 						</div>
@@ -180,11 +187,7 @@ class App extends Component {
 				</div>
 			);
 		}
-		return (
-			<div>
-				{weather}
-			</div>
-		);
+		return <div>{weatherValue}</div>;
 	}
 }
 export default App;

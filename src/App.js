@@ -98,7 +98,6 @@ class App extends Component {
 
 	handleSearchInput = e => {
 		this.setState({searchCity: e});
-
 	};
 
 	handleErrors = response => {
@@ -108,7 +107,7 @@ class App extends Component {
 		return response;
 	};
 
-	handleSearchSubmit = e => {
+	fetchWithName() {
 		const query = this.state.searchCity;
 		fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
 			.then(this.handleErrors)
@@ -121,7 +120,27 @@ class App extends Component {
 			.catch(error => {
 				alert("City not found!");
 			});
+	}
 
+	fetchWithCoordinates() {
+		const query = this.state.searchCity;
+		fetch(
+			`${api.base}weather?lat=${query[0]}&lon=${query[1]}&units=metric&APPID=${api.key}`
+		)
+			.then(this.handleErrors)
+			.then(res => res.json())
+			.then(result => {
+				this.setState({
+					currentWeather: result
+				});
+			})
+			.catch(error => {
+				alert("City not found!");
+			});
+	}
+
+	handleSearchSubmit = e => {
+		this.fetchWithName();
 		e.preventDefault();
 	};
 
@@ -142,9 +161,17 @@ class App extends Component {
 									<Autocomplete
 										placeholder="Search by city or postal code"
 										onPlaceSelected={place => {
-											this.handleSearchInput(
-												place.name === undefined ? place.formatted_address : place.name
-											);
+											if (place.name === undefined) {
+												this.handleSearchInput([
+													place.geometry.location.lat(),
+													place.geometry.location.lng()
+												]);
+												this.fetchWithCoordinates();
+											} else {
+												this.handleSearchInput(
+													place.name
+												);
+											}
 										}}
 										types={["(regions)"]}
 									/>

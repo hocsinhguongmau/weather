@@ -56,7 +56,7 @@ body {
             height: 40px;
             line-height: 40px;
             outline: none;
-            width: 300px;
+            width: 100%;
         }
         button[type="submit"]{
             height: 40px;
@@ -72,6 +72,11 @@ body {
                 background: #32a852;
                 color: #fff;
             } */
+        }
+        .current-location{
+            color: #333;
+            margin-top: 10px;
+            display: inline-block;
         }
     }
 }

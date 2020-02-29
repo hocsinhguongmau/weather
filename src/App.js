@@ -13,7 +13,8 @@ class App extends Component {
 		currentLocation: {},
 		currentTime: null,
 		currentWeather: {},
-		searchCity: ""
+		searchCity: "",
+		searchStatus: false
 	};
 
 	fetchWeather() {
@@ -25,12 +26,14 @@ class App extends Component {
 				result => {
 					this.setState({
 						isLoaded: true,
-						currentWeather: result
+						currentWeather: result,
+						searchStatus: true
 					});
 				},
 				error => {
 					this.setState({
 						isLoaded: true,
+						searchStatus: "Searching...",
 						error
 					});
 				}
@@ -114,107 +117,105 @@ class App extends Component {
 			.then(res => res.json())
 			.then(result => {
 				this.setState({
-					currentWeather: result
+					currentWeather: result,
+					searchStatus: true
 				});
 			})
 			.catch(error => {
-				alert("City not found!");
+				this.setState({
+					searchStatus: "City not found!"
+				});
 			});
 	}
 
 	fetchWithCoordinates() {
 		const query = this.state.searchCity;
 		fetch(
-			`${api.base}weather?lat=${query[0]}&lon=${query[1]}&units=metric&APPID=${api.key}`
+			`${api.base}weather?lat=${query[0]}&lon=${
+				query[1]
+			}&units=metric&APPID=${api.key}`
 		)
 			.then(this.handleErrors)
 			.then(res => res.json())
 			.then(result => {
 				this.setState({
-					currentWeather: result
+					currentWeather: result,
+					searchStatus: true
 				});
 			})
 			.catch(error => {
-				alert("City not found!");
+				this.setState({
+					searchStatus: "City not found!"
+				});
 			});
 	}
-
-	handleSearchSubmit = e => {
-		this.fetchWithName();
-		e.preventDefault();
-	};
 
 	render() {
 		let weatherValue = null;
 		let currentWeather = this.state.currentWeather;
-
-		if (this.state.isLoaded) {
+		if (this.state.isLoaded && this.state.searchStatus) {
 			weatherValue = (
-				<div className="App">
-					<div className={`${this.getTime(new Date())} wrapper`}>
-						<div className="weather">
-							<div className="weather-search">
-								<form
-									action=""
-									onSubmit={this.handleSearchSubmit}
-								>
-									<Autocomplete
-										placeholder="Search by city or postal code"
-										onPlaceSelected={place => {
-											if (place.name === undefined) {
-												this.handleSearchInput([
-													place.geometry.location.lat(),
-													place.geometry.location.lng()
-												]);
-												this.fetchWithCoordinates();
-											} else {
-												this.handleSearchInput(
-													place.name
-												);
-											}
-										}}
-										types={["(regions)"]}
-									/>
-									<button type="submit">Search</button>
-								</form>
-							</div>
-							<div className="weather-info">
-								<p className="weather-title">
-									{currentWeather.name},&nbsp;
-									{currentWeather.sys.country}
-								</p>
-								<p>{this.getDate(new Date())}</p>
-								<div className="weather-info-left">
-									<p className="weather-description">
-										{currentWeather.weather[0].description}
-									</p>
-									<p className="weather-image">
-										<img
-											src={
-												process.env.PUBLIC_URL +
-												`/images/animated-icons/${currentWeather.weather[0].icon}.svg`
-											}
-											alt={
-												currentWeather.weather[0]
-													.description
-											}
-										/>
-										{Math.round(
-											currentWeather.main.temp,
-											0
-										)}{" "}
-										&deg;C
-									</p>
-								</div>
-
-								<div className="weather-info-right"></div>
-							</div>
-						</div>
+				<div className="weather-info">
+					<p className="weather-title">
+						{currentWeather.name},&nbsp;
+						{currentWeather.sys.country}
+					</p>
+					<p>{this.getDate(new Date())}</p>
+					<div className="weather-info-left">
+						<p className="weather-description">
+							{currentWeather.weather[0].description}
+						</p>
+						<p className="weather-image">
+							<img
+								src={
+									process.env.PUBLIC_URL +
+									`/images/animated-icons/${currentWeather.weather[0].icon}.svg`
+								}
+								alt={currentWeather.weather[0].description}
+							/>
+							{Math.round(currentWeather.main.temp, 0)} &deg;C
+						</p>
 					</div>
 				</div>
 			);
+		} else {
+			weatherValue = <p>{this.state.searchStatus}</p>;
 		}
-		return <div>{weatherValue}</div>;
+
+		return (
+			<div className="App">
+				<div className={`${this.getTime(new Date())} wrapper`}>
+					<div className="weather">
+						<div className="weather-search">
+							<Autocomplete
+								placeholder="Search by city or postal code"
+								onPlaceSelected={place => {
+									if (place.name === undefined) {
+										// this.handleSearchInput([
+										// 	place.geometry.location.lat(),
+										// 	place.geometry.location.lng()
+										// ]);
+										// this.fetchWithCoordinates();
+										this.handleSearchInput(
+											place.formatted_address
+										);
+										this.fetchWithName();
+									} else {
+										this.handleSearchInput(place.name);
+										this.fetchWithName();
+									}
+								}}
+								types={["(regions)"]}
+							/>
+							<a className="current-location" href="#" onClick={() => this.fetchWeather()}>
+								Use your current location
+							</a>
+						</div>
+						{weatherValue}
+					</div>
+				</div>
+			</div>
+		);
 	}
 }
 export default App;

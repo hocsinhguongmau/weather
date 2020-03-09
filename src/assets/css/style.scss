@@ -1,4 +1,4 @@
-*{
+* {
     box-sizing: border-box;
 }
 
@@ -13,41 +13,51 @@ body {
     background-size: cover;
     min-height: 100vh;
     padding-top: 30px;
-    &.day{
+
+    &.day {
         background-image: url("../images/bg/day.jpg");
     }
-    &.night{
+
+    &.night {
         background-image: url("../images/bg/night.jpg");
     }
 }
-.weather{
+
+.weather {
     max-width: 600px;
     margin: auto;
     padding: 20px;
     background: #fff;
     border-radius: 10px;
     border: 1px solid #aaa;
-    &-info{
+
+    &-info {
         font-size: 20px;
         line-height: 24px;
         padding-top: 20px;
     }
-    &-title{
-        font-size: 40px;
-        line-height: 50px;
+
+    &-title {
+        font-size: 30px;
+        line-height: 40px;
     }
-    &-description{
+
+    &-description {
         text-transform: capitalize;
     }
-    &-image{
-        line-height: 64px;
-        img{
+
+    &-image {
+        line-height: 30px;
+
+        img {
             vertical-align: top;
-            width: 64px;
+            width: 30px;
+            margin-right: 5px;
         }
     }
-    &-search{
-        input{
+
+    &-search {
+        input {
             background: #fff;
             border: 1px solid #333;
             font-size: 14px;
@@ -58,7 +68,8 @@ body {
             outline: none;
             width: 100%;
         }
-        button[type="submit"]{
+
+        button[type="submit"] {
             height: 40px;
             line-height: 40px;
             font-size: 14px;
@@ -67,16 +78,25 @@ body {
             border-radius: 3px;
             vertical-align: top;
             cursor: pointer;
-            transition: all .2s ease-out;
+            transition: all 0.2s ease-out;
             /* &:hover{
                 background: #32a852;
                 color: #fff;
             } */
         }
-        .current-location{
+
+        .current-location {
             color: #333;
             margin-top: 10px;
             display: inline-block;
         }
     }
+}
+
+.not-found {
+    margin-top: 10px;
+}
+
+.degF {
+    display: none;
 }

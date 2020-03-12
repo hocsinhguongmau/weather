@@ -15,7 +15,10 @@ const CurrentWeather = props => {
 					</p>
 					<p className="weather-image">
 						<img
-							src={`https://darksky.net/images/weather-icons/${currentWeather.icon}.png`}
+							src={
+								process.env.PUBLIC_URL +
+								`/images/icons/${currentWeather.icon}.svg`
+							}
 							alt={currentWeather.summary}
 						/>
 						<span className="degF">

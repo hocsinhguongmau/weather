@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Autocomplete from "react-google-autocomplete";
 import Geocode from "react-geocode";
 import CurrentWeather from "./CurrentWeather";
+import HourlyWeather from "./HourlyWeather";
 
 const api = {
 	key: "e985b57d27d16a6af5f72b816e5afe31",
@@ -48,8 +49,9 @@ class Weathers extends Component {
 		Geocode.fromLatLng(lat, lon).then(
 			response => {
 				const address = response.results[0];
+				console.log(address);
 				this.setState({
-					currentLocation: `${address.address_components[2].long_name} ${address.address_components[4].long_name} ${address.address_components[3].short_name}`
+					currentLocation: address.formatted_address
 				});
 			},
 			error => {
@@ -124,14 +126,19 @@ class Weathers extends Component {
 		return `${day} ${date} ${month} ${year}`;
 	};
 
-	updateTime = time => {
+	updateTime(time) {
 		const date = new Date(time * 1000);
 		const hours = date.getHours();
 		const minutes = "0" + date.getMinutes();
-		const seconds = "0" + date.getSeconds();
 
 		return hours + ":" + minutes.substr(-2);
-	};
+	}
+
+	getHourOnly(time) {
+		const date = new Date(time * 1000);
+		const hours = date.getHours();
+		return hours;
+	}
 
 	async fetchWithName(name) {
 		await new Promise((resolve, reject) => {
@@ -157,11 +164,10 @@ class Weathers extends Component {
 	}
 
 	FtoC(temp) {
-		return ((temp - 32) * 5) / 9;
+		return (((temp - 32) * 5) / 9).toFixed(2);
 	}
 
 	render() {
-
 		return (
 			<div>
 				<div className="weather-search">
@@ -199,7 +205,14 @@ class Weathers extends Component {
 					currentLocation={this.state.currentLocation}
 					FtoC={this.FtoC}
 					currentWeather={this.state.currentWeather}
-					currentLocation={this.state.currentLocation}
+				/>
+				<HourlyWeather
+					isLoaded={this.state.isLoaded}
+					searchStatus={this.state.searchStatus}
+					FtoC={this.FtoC}
+					hourlyWeather={this.state.hourlyWeather}
+					updateTime={this.updateTime}
+					getHourOnly={this.getHourOnly}
 				/>
 			</div>
 		);

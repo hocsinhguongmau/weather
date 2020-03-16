@@ -20,7 +20,7 @@ const HourlyWeather = props => {
 				name: props.updateTime(hourlyWeather.data[i].time),
 				temp: props.FtoC(hourlyWeather.data[i].temperature)
 			});
-			if (i > 10) {
+			if (i > 7) {
 				break;
 			}
 		}
@@ -30,7 +30,7 @@ const HourlyWeather = props => {
 		<div>
 			<h2 className="small-title">Weather forecast hourly</h2>
 			<ResponsiveContainer width="100%" height={400}>
-				<LineChart data={data}>
+				<LineChart data={data} fontSize="12">
 					<Line type="monotone" dataKey="temp" stroke="#8884d8" />
 					<CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
 					<XAxis
@@ -38,15 +38,19 @@ const HourlyWeather = props => {
 						label={{
 							value: "Hour",
 							position: "bottom",
-							offset: -10
+							offset: -5,
+							fontSize: 12,
+							color: "#333"
 						}}
+						interval={0}
 					/>
 					<YAxis
+						allowDecimals={false}
 						label={{
 							value: "Temperature",
 							angle: -90,
-							position: "left",
-							offset: -10
+							fontSize: 12,
+							color: "#333"
 						}}
 					/>
 					<Tooltip />

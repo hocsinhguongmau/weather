@@ -49,9 +49,9 @@ class Weathers extends Component {
 		Geocode.fromLatLng(lat, lon).then(
 			response => {
 				const address = response.results[0];
-				console.log(address);
+				const length = address.address_components.length;
 				this.setState({
-					currentLocation: address.formatted_address
+					currentLocation: `${address.address_components[length - 3].long_name} ${address.address_components[length - 1].long_name} ${address.address_components[length - 2].short_name}`
 				});
 			},
 			error => {
@@ -164,7 +164,7 @@ class Weathers extends Component {
 	}
 
 	FtoC(temp) {
-		return (((temp - 32) * 5) / 9).toFixed(2);
+		return (((temp - 32) * 5) / 9).toFixed(3);
 	}
 
 	render() {

@@ -29,7 +29,7 @@ const HourlyWeather = props => {
 	hourlyWeatherValue = (
 		<div>
 			<h2 className="small-title">Weather forecast hourly</h2>
-			<ResponsiveContainer width="100%" height={400}>
+			<ResponsiveContainer width="100%" height={200}>
 				<LineChart data={data} fontSize="12">
 					<Line type="monotone" dataKey="temp" stroke="#8884d8" />
 					<CartesianGrid stroke="#ccc" strokeDasharray="3 3" />

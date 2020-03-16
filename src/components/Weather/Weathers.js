@@ -6,7 +6,7 @@ import HourlyWeather from "./HourlyWeather";
 
 const api = {
 	key: "e985b57d27d16a6af5f72b816e5afe31",
-	base: "https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast"
+	base: "https://api.darksky.net/forecast"
 };
 
 class Weathers extends Component {

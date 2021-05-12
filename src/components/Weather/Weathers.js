@@ -6,7 +6,7 @@ import HourlyWeather from "./HourlyWeather"
 
 const api = {
 	key: "e985b57d27d16a6af5f72b816e5afe31",
-	base: "http://thangnguyen24111990-eval-test.apigee.net/weather/forecast",
+	base: "https://thangnguyen24111990-eval-prod.apigee.net/weather/forecast",
 }
 
 class Weathers extends Component {

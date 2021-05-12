@@ -1,47 +1,47 @@
 {
-  "homepage": "http://thang241190.github.io/weather",
-  "name": "weather",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.4.1",
-    "@testing-library/user-event": "^7.2.1",
-    "node-sass": "^4.13.1",
-    "react": "^16.12.0",
-    "react-charts": "^2.0.0-beta.6",
-    "react-dom": "^16.12.0",
-    "react-geocode": "^0.2.1",
-    "react-google-autocomplete": "^1.1.2",
-    "react-scripts": "3.4.0",
-    "recharts": "^2.0.0-beta.2",
-    "reset-css": "^5.0.1",
-    "typeface-open-sans": "0.0.75"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "gh-pages": "^2.2.0"
-  }
+	"homepage": "http://thang241190.github.io/weather",
+	"name": "weather",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"@testing-library/jest-dom": "^4.2.4",
+		"@testing-library/react": "^9.4.1",
+		"@testing-library/user-event": "^7.2.1",
+		"react": "^16.12.0",
+		"react-charts": "^2.0.0-beta.6",
+		"react-dom": "^16.12.0",
+		"react-geocode": "^0.2.1",
+		"react-google-autocomplete": "^1.1.2",
+		"react-scripts": "3.4.0",
+		"recharts": "^2.0.0-beta.2",
+		"reset-css": "^5.0.1",
+		"sass": "^1.32.12",
+		"typeface-open-sans": "0.0.75"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject",
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d build"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"gh-pages": "^2.2.0"
+	}
 }
